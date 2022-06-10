@@ -27,11 +27,12 @@ services:
     component: fc # 组件名称
     actions:
       pre-deploy:
-        - run: npm install
-          path: ./code
-        - run: npm run build
-          path: ./code
-        - plugin: website-fc
+        - component: fc build --use-docker --dockerfile ./code/dockerfile
+      #   - run: npm install
+      #     path: ./code
+      #   - run: npm run build
+      #     path: ./code
+      #   - plugin: website-fc
     props: # 组件的属性值
       region: ${vars.region}
       service:
@@ -40,9 +41,11 @@ services:
       function:
         name: hexo
         description: "Serverless Devs Website hexo Function"
-        codeUri: ./code/public
         timeout: 30
         memorySize: 512
+        runtime: custom-container
+        customContainerConfig:
+          image: "registry.cn-hangzhou.aliyuncs.com/fengchong_devops/poc-demo:v1"
       triggers:
         - name: httpTrigger
           type: http
