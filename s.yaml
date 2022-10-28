@@ -28,11 +28,15 @@ services:
     actions:
       pre-deploy:
         - component: fc build --use-docker --dockerfile ./code/dockerfile
-      #   - run: npm install
-      #     path: ./code
-      #   - run: npm run build
-      #     path: ./code
-      #   - plugin: website-fc
+#         - run: npm install
+#           path: ./code
+      post-deploy: # 在deploy之后运行
+        - plugin: fc-canary
+          args:
+            description: 'auto canary'
+            canaryStep: # 灰度20%流量，1分钟后灰度剩余80%流量
+              weight: 20
+              interval: 1
     props: # 组件的属性值
       region: ${vars.region}
       service:
@@ -52,7 +56,6 @@ services:
         memorySize: 512
         runtime: custom-container
         customContainerConfig:
-          #image: "registry.cn-hangzhou.aliyuncs.com/fengchong_devops/poc-demo:v1"
           image: "fengchong-registry-vpc.cn-hangzhou.cr.aliyuncs.com/fengchong/fengchong-demo:v1"
           instanceID: cri-h5fblt9aro8dpy4t
       triggers:
