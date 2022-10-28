@@ -38,6 +38,13 @@ services:
       service:
         name: website
         description: "Serverless Devs Website Service"
+        vpcConfig:
+          vpcId: vpc-bp1izewu1xpnssubjdp3o
+          vswitchIds:
+            - vsw-bp18d4amicjseu6fsoig2
+            - vsw-bp1fjnjvbyy2mfeqzv20g
+            - vsw-bp1onger7ubugglpkf3s0
+          securityGroupId: sg-bp1dibj06ceg837346wp
       function:
         name: hexo
         description: "Serverless Devs Website hexo Function"
@@ -45,7 +52,9 @@ services:
         memorySize: 512
         runtime: custom-container
         customContainerConfig:
-          image: "registry.cn-hangzhou.aliyuncs.com/fengchong_devops/poc-demo:v1"
+          #image: "registry.cn-hangzhou.aliyuncs.com/fengchong_devops/poc-demo:v1"
+          image: "fengchong-registry-vpc.cn-hangzhou.cr.aliyuncs.com/fengchong/fengchong-demo:v1"
+          instanceID: cri-h5fblt9aro8dpy4t
       triggers:
         - name: httpTrigger
           type: http
