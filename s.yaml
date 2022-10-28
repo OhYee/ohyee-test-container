@@ -27,9 +27,9 @@ services:
     component: fc # 组件名称
     actions:
       pre-deploy:
+        - run: printenv
+          path: ./code
         - component: fc build --use-docker --dockerfile ./code/dockerfile
-#         - run: npm install
-#           path: ./code
       post-deploy: # 在deploy之后运行
         - plugin: fc-canary
           args:
