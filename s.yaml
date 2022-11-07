@@ -57,7 +57,7 @@ services:
         runtime: custom-container
         customContainerConfig:
           image: "fengchong-registry-vpc.cn-hangzhou.cr.aliyuncs.com/fengchong/fengchong-demo:v1"
-          instanceID: cri-h5fblt9aro8dpy4t
+          instanceID: cri-49q4pih76fw9fj80
       triggers:
         - name: httpTrigger
           type: http
